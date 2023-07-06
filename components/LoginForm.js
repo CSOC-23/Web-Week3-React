@@ -39,11 +39,12 @@ export default function RegisterForm() {
 	  
 			// Set the token in the context
 			setToken(token)
-			
-			router.push("/")
-	  
+
 			// Optionally, you can redirect the user to a specific page after successful login
 			// router.push("/dashboard");
+			
+			//Note that I am not using router.push because it does not cause the page to refresh. I want to fetch data from the backend so, I am using window.location.href for it
+			window.location.href = "/"
 	  
 			console.log("Login successful");
 		  } catch (error) {

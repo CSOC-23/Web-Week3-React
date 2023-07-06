@@ -10,24 +10,29 @@ export const AuthProvider = ({ children }) => {
 	const [profileName, setProfileName] = useState("");
 	const [avatarImage, setAvatarImage] = useState("#");
 	const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
+	// const [loading, setLoading] = useState(true);
+
 	const token = cookies.token;
 
 	const setToken = (newToken) => setCookies("token", newToken, { path: "/" });
 	const deleteToken = () => removeCookies("token");
 	const logout = () => {
 		deleteToken();
+		setAvatarImage("#")
+		setProfileName("")
 		router.push("/login");
 	};
 
-	useEffect(() => {
+	const fetchData = async()=>{
 		if (token) {
-			axios
+			await axios
 				.get("auth/profile/", {
 					headers: {
 						Authorization: "Token " + token,
 					},
 				})
 				.then((response) => {
+					console.log(response)
 					setAvatarImage(
 						"https://ui-avatars.com/api/?name=" +
 							response.data.name +
@@ -36,10 +41,14 @@ export const AuthProvider = ({ children }) => {
 					setProfileName(response.data.name);
 				})
 				.catch((error) => {
-					console.log("Some error occurred");
+					console.log(error);
 				});
 		}
-	}, [setAvatarImage, setProfileName, token]);
+	}
+
+	useEffect(() => {
+		fetchData()
+	}, [token]);
 
 	return (
 		<AuthContext.Provider
@@ -55,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 			}}>
 			{children}
 		</AuthContext.Provider>
-	);
+	)
 };
 
 export const useAuth = () => useContext(AuthContext);
