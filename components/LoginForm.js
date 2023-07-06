@@ -29,7 +29,7 @@ export default function RegisterForm() {
 			}
 	  
 			// Send login request to the backend
-			const response = await axios.post("/auth/login", {
+			const response = await axios.post("auth/login/", {
 			  username: username,
 			  password: password,
 			});
@@ -38,7 +38,9 @@ export default function RegisterForm() {
 			const { token } = response.data;
 	  
 			// Set the token in the context
-			{setToken(token) && router.push("/")};
+			setToken(token)
+			
+			router.push("/")
 	  
 			// Optionally, you can redirect the user to a specific page after successful login
 			// router.push("/dashboard");
@@ -46,7 +48,7 @@ export default function RegisterForm() {
 			console.log("Login successful");
 		  } catch (error) {
 			// Handle login error
-			console.log("Login failed");
+			console.log(`${error}`);
 		  }
 		
 	};

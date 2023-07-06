@@ -29,6 +29,7 @@ export default function TodoListItem() {
 			<li className="border flex border-gray-500 rounded px-2 py-2 justify-between items-center mb-2">
 				<input
 					id="input-button-1"
+					name="taskEdit"
 					type="text"
 					className="hideme appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring  todo-edit-task-input"
 					placeholder="Edit The Task"

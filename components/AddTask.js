@@ -11,6 +11,7 @@ export default function AddTask() {
 		<div className="flex items-center max-w-sm mt-24">
 			<input
 				type="text"
+				name="addTask"
 				className="todo-add-task-input px-4 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
 				placeholder="Enter Task"
 			/>
