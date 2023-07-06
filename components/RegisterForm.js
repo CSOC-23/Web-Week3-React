@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
+import bcrypt from "bcrypt"
 
 export default function Register() {
 	const { setToken } = useAuth();
@@ -25,8 +26,13 @@ export default function Register() {
 		return true;
 	};
 
-	const register = (e) => {
+	const register = async(e) => {
 		e.preventDefault();
+		const saltRounds = 10; 
+
+		const salt = await bcrypt.genSalt(saltRounds);
+
+		const hashedPassword = await bcrypt.hash(password, salt);
 
 		if (registerFieldsAreValid(firstName, lastName, email, username, password)) {
 			console.log("Please wait...");
@@ -35,7 +41,7 @@ export default function Register() {
 				name: firstName + " " + lastName,
 				email: email,
 				username: username,
-				password: password,
+				password: hashedPassword,
 			};
 
 			axios
