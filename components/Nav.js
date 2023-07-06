@@ -2,13 +2,23 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useAuth } from "../context/auth";
+import { useRouter } from 'next/router';
 /**
  *
  * @todo Condtionally render login/register and Profile name in NavBar
  */
 
 export default function Nav() {
+	const router = useRouter();
 	const { logout, profileName, avatarImage } = useAuth();
+
+	const handleRegisterClick = () => {
+		router.push('/register');
+	  };
+
+	  const handleLoginClick = () => {
+		router.push('/login');
+	  };
 
 	return (
 		<nav className="bg-blue-600">
@@ -24,10 +34,10 @@ export default function Nav() {
 				</ul>
 				<ul className="flex">
 					<li className="text-white mr-2">
-						<Link href="/login">Login</Link>
+					<button onClick={handleLoginClick}>Login</button>
 					</li>
 					<li className="text-white">
-						<Link href="/register">Register</Link>
+					<button onClick={handleRegisterClick}>Register</button>
 					</li>
 				</ul>
 				<div className="inline-block relative w-28">

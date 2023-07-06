@@ -13,11 +13,8 @@ const Auth_Required = (Component) => {
     const token = cookies.token;
 
     useEffect(() => {
-      if (!token) {
+      if (!token && router.pathname !== '/login' && router.pathname !== '/register') {
         router.push('/login');
-      }
-      else{
-        router.push('/')
       }
     }, [token, router]);
 

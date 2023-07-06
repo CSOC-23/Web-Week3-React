@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useAuth } from "../context/auth";
 import axios from "../utils/axios";
+import { useRouter } from "next/router";
 
 export default function RegisterForm() {
 	const { setToken } = useAuth();
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
+
+	const router = useRouter()
 
 	const login = async() => {
 		/***
@@ -27,15 +30,15 @@ export default function RegisterForm() {
 	  
 			// Send login request to the backend
 			const response = await axios.post("/auth/login", {
-			  username,
-			  password,
+			  username: username,
+			  password: password,
 			});
 	  
 			// Extract the token from the response
 			const { token } = response.data;
 	  
 			// Set the token in the context
-			setToken(token);
+			{setToken(token) && router.push("/")};
 	  
 			// Optionally, you can redirect the user to a specific page after successful login
 			// router.push("/dashboard");

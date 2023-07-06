@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
-import bcrypt from "bcrypt"
 
 export default function Register() {
 	const { setToken } = useAuth();
@@ -28,11 +27,6 @@ export default function Register() {
 
 	const register = async(e) => {
 		e.preventDefault();
-		const saltRounds = 10; 
-
-		const salt = await bcrypt.genSalt(saltRounds);
-
-		const hashedPassword = await bcrypt.hash(password, salt);
 
 		if (registerFieldsAreValid(firstName, lastName, email, username, password)) {
 			console.log("Please wait...");
@@ -41,7 +35,7 @@ export default function Register() {
 				name: firstName + " " + lastName,
 				email: email,
 				username: username,
-				password: hashedPassword,
+				password: password,
 			};
 
 			axios
@@ -51,6 +45,9 @@ export default function Register() {
 					router.push("/");
 				})
 				.catch(function (err) {
+					<div>
+						<h1>An account using same email or username is already created</h1>
+					</div>
 					console.log("An account using same email or username is already created");
 				});
 		}
