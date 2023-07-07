@@ -14,7 +14,23 @@ export default function Home() {
 		 * @todo Set the tasks state and display them in the using TodoListItem component
 		 * The user token can be accessed from the context using useAuth() from /context/auth.js
 		 */
+
+			const options={
+				headers: {
+					'Authorization': 'Token ' + token,
+					'Content-Type': 'application/json',
+				}
+			}
+			axios.get("todo/",options).then((e)=>{
+				setTasks(e.data)
+				console.log(e.data)
+			}).catch((err)=>console.log(err))
+	
 	}
+
+	useEffect(()=>{
+		getTasks()
+	},[tasks])
 
 	return (
 		<div>
@@ -24,7 +40,7 @@ export default function Home() {
 					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold rounded-full ">
 						Available Tasks
 					</span>
-					<TodoListItem />
+					<TodoListItem tasks={tasks}/>
 				</ul>
 			</center>
 		</div>

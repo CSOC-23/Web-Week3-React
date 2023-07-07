@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
 	const [profileName, setProfileName] = useState("");
 	const [avatarImage, setAvatarImage] = useState("#");
 	const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
-	// const [loading, setLoading] = useState(true);
 
 	const token = cookies.token;
 
@@ -23,16 +22,16 @@ export const AuthProvider = ({ children }) => {
 		router.push("/login");
 	};
 
-	const fetchData = async()=>{
+	const fetchData = ()=>{
+		///yeh shi hai
 		if (token) {
-			await axios
+			axios
 				.get("auth/profile/", {
 					headers: {
 						Authorization: "Token " + token,
 					},
 				})
 				.then((response) => {
-					console.log(response)
 					setAvatarImage(
 						"https://ui-avatars.com/api/?name=" +
 							response.data.name +
@@ -48,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		fetchData()
-	}, [token]);
+	}, []);
 
 	return (
 		<AuthContext.Provider

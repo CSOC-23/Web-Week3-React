@@ -21,30 +21,31 @@ export default function Nav() {
 	  };
 
 	return (
-		<nav className="bg-blue-600">
+		<nav className="navbar">
 			<ul className="flex items-center justify-between p-5">
 				<ul className="flex items-center justify-between space-x-4">
 					<li>
 						<Link href="/" passHref={true}>
 							<a>
-								<h1 className="text-white font-bold text-xl">Todo</h1>
+								<h1 className="text-my-white font-bold text-5xl font-custom-2">Todo</h1>
 							</a>
 						</Link>
 					</li>
 				</ul>
 				<ul className="flex">
-					<li className="text-white mr-2">
+					<li className="text-my-white mr-2 text-3xl">
 					<button onClick={handleLoginClick}>Login</button>
 					</li>
-					<li className="text-white">
+					<div className="w-0.5 bg-my-olive h-auto border rounded-full"></div>
+					<li className="text-[#F6EDD9] text-3xl ml-2">
 					<button onClick={handleRegisterClick}>Register</button>
 					</li>
 				</ul>
 				<div className="inline-block relative w-28">
 					<div className="group inline-block relative">
-						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+						<button className="text-my-white font-semibold py-2 px-4 rounded flex flex-col items-center">
 							<img src={avatarImage} />
-							<span className="mr-1">{profileName}</span>
+							<span className="text-base font-custom-1">{profileName}</span>
 							<svg
 								className="fill-current h-4 w-4"
 								xmlns="http://www.w3.org/2000/svg"
