@@ -44,7 +44,7 @@ export default function Nav() {
 				<div className="inline-block relative w-28">
 					<div className="group inline-block relative">
 						<button className="text-my-white font-semibold py-2 px-4 rounded flex flex-col items-center">
-							<img src={avatarImage} />
+							<img style={{borderRadius:"50px"}} src={avatarImage} />
 							<span className="text-base font-custom-1">{profileName}</span>
 							<svg
 								className="fill-current h-4 w-4"

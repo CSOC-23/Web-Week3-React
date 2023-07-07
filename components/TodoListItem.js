@@ -1,9 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-
+import * as React from 'react';
 import { useState } from "react";
 import { useAuth } from "../context/auth";
 import axios from "../utils/axios";
 
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+const bull = (
+	<Box
+	  component="span"
+	  sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+	>
+	  •
+	</Box>
+  );
 
 export default function TodoListItem({tasks}) {
 
@@ -52,7 +67,7 @@ export default function TodoListItem({tasks}) {
 	};
 
 	return (
-		<>
+		<div className='flex flex-col'>
 				<input
 					id="input-button-1"
 					name="taskEdit"
@@ -75,13 +90,29 @@ export default function TodoListItem({tasks}) {
 					</button>
 				</div>
 
+				<div className='flex'>
+				
 				{tasks.map((i)=>{
 					return (
-						<div className="todo-task  text-gray-600 " key={i.id}>
-					<div >
-					<li className="border flex border-gray-500 rounded px-2 py-2 justify-between items-center mb-2">
-						{i.title}
-					<span id="task-actions-1" className="flex">
+						<Box sx={{ minWidth: 275 }} key={i.id}>
+						
+      					<Card className='m-4 py-4' variant="outlined">{
+							(
+								<React.Fragment className='flex flex-col text-center justify-center'>
+								  <CardContent>
+									<Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+									  Task
+									</Typography>
+									
+									<Typography variant="body2">
+									 {i.title}
+									</Typography>
+								  </CardContent>
+								  
+								  
+
+							
+								  <span id="task-actions-1" className="flex justify-center space-x-4">				
 					<button
 						style={{ marginRight: "5px" }}
 						type="button"
@@ -89,7 +120,7 @@ export default function TodoListItem({tasks}) {
 							setId(i.id)
 							editTask(i.id)
 						}}
-						className="bg-transparent hover:bg-yellow-500 hover:text-white border border-yellow-500 hover:border-transparent rounded px-2 py-2">
+						className="bg-transparent hover:bg-yellow-500 hover:text-white border border-yellow-500 hover:border-transparent rounded px-2 py-2 ">
 						<img
 							src="https://res.cloudinary.com/nishantwrp/image/upload/v1587486663/CSOC/edit.png"
 							width="18px"
@@ -109,14 +140,18 @@ export default function TodoListItem({tasks}) {
 						/>
 					</button>
 				</span>
-					</li>
-					</div>
+				
+								</React.Fragment>
+							  )
+						}</Card>
 
 	
-				</div>
+					</Box>
 					)
 				})
 				}
-		</>
+				</div>
+				
+		</div>
 	);
 }
