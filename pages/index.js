@@ -5,13 +5,16 @@ import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import useAuthProtection from "../middlewares/auth_required";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 export default function Home() {
+
 
 	useAuthProtection()
 
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
+	const router = useRouter()
 
 	function getTasks() {
 		/***
@@ -34,7 +37,10 @@ export default function Home() {
 	}
 
 	useEffect(()=>{
-		toast.success("Login successful!")
+		if(router.pathname="/" && token){
+
+			toast.success("Login successful!")
+		}
 	},[])
 
 	useEffect(()=>{
