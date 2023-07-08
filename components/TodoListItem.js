@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-
-export default function TodoListItem() {
+import React, { useState } from "react";
+export default function TodoListItem({task}) {
+	const [tasktitle, setTasktitle] = useState(task.title);
 	const editTask = (id) => {
 		/**
 		 * @todo Complete this function.
@@ -23,7 +24,6 @@ export default function TodoListItem() {
 		 * @todo 2. Update the task in the dom.
 		 */
 	};
-
 	return (
 		<>
 			<li className="border flex border-gray-500 rounded px-2 py-2 justify-between items-center mb-2">
@@ -32,6 +32,7 @@ export default function TodoListItem() {
 					type="text"
 					className="hideme appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring  todo-edit-task-input"
 					placeholder="Edit The Task"
+					
 				/>
 				<div id="done-button-1" className="hideme">
 					<button
@@ -42,7 +43,7 @@ export default function TodoListItem() {
 					</button>
 				</div>
 				<div id="task-1" className="todo-task  text-gray-600">
-					Sample Task 1
+					{tasktitle}
 				</div>
 				<span id="task-actions-1" className="">
 					<button

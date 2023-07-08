@@ -41,6 +41,7 @@ export default function Register() {
 			axios
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
+					console.log(data.token)
 					setToken(data.token);
 					router.push("/");
 				})
