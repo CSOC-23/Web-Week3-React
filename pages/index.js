@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import useAuthProtection from "../middlewares/auth_required";
-// import { checkAuthentication } from "../middlewares/auth_required";
 
 export default function Home() {
 
 	useAuthProtection()
-	
+
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
 
@@ -36,13 +35,13 @@ export default function Home() {
 
 	useEffect(()=>{
 		getTasks()
-	},[])
+	},[tasks])
 
 	return (
 		<div>
 			<center>
 				<AddTask />
-				<ul className="flex-col max-w-xl mt-9 mb-3r">
+				<ul className="flex-col max-w-6xl mt-9 mb-3r justify-center">
 					<span className="inline-block bg-my-blue py-1 mb-2 px-9 text-sm text-white font-bold rounded-full ">
 						Available Tasks
 					</span>

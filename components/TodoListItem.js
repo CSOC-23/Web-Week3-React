@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/router';
 
 const bull = (
 	<Box
@@ -25,8 +24,6 @@ export default function TodoListItem({tasks}) {
 	const [id, setId] = useState()
 	const [hide, setHide] = useState(true)
 	const [titleValue, setTitle] = useState("")
-
-	const router = useRouter()
 
 	const options={
 		headers: {
@@ -52,7 +49,7 @@ export default function TodoListItem({tasks}) {
 		 */
 
 		await axios.delete(`todo/${id}/`,options)
-		router.reload()
+		
 	};
 
 	const updateTask = async(id) => {
@@ -64,7 +61,7 @@ export default function TodoListItem({tasks}) {
 
 		axios.put(`todo/${id}/`,{title: titleValue},options).then(()=>{
 			setTitle("")
-			router.reload()
+			
 		}).catch((err)=>console.log(err))
 		
 	};
@@ -93,7 +90,7 @@ export default function TodoListItem({tasks}) {
 					</button>
 				</div>
 
-				<div className='flex'>
+				<div className='flex task-dabba'>
 				
 				{tasks.map((i)=>{
 					return (

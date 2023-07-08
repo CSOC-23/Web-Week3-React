@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	const fetchData = ()=>{
-		///yeh shi hai
 		if (token) {
 			axios
 				.get("auth/profile/", {

@@ -1,13 +1,12 @@
 import { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
-import { useRouter } from "next/router";
 
 export default function AddTask() {
 
 	const [task, setTask] = useState("")
 	const { token } = useAuth();
-	const router = useRouter()
+	
 
 	const addTask = async() => {
 		/**
@@ -25,7 +24,7 @@ export default function AddTask() {
 
 		try{
 			await axios.post("todo/create/",{title:task},options)
-			router.reload()
+			
 		}
 		catch(err){
 			console.log(err)
