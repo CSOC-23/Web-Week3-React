@@ -1,36 +1,18 @@
-/***
- * @todo Redirect the user to login page if token is not present.
- */
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
+import { useAuth } from '../context/auth';
 
-const Auth_Required = (Component) => {
-  // console.log("render")
-  return (props) => {
-    const router = useRouter();
-    const [cookies] = useCookies(['token']);
-    const token = cookies.token;
+const useAuthProtection = () => {
+  const router = useRouter();
+  const { token } = useAuth();
 
-    useEffect(() => {
-      //yha garbad hai
-      if (!token ) {
-        if(router.pathname !== '/login' && router.pathname !== '/register'){
-          router.push('/login');
-          return
-        }
+  useEffect(() => {
+    if (!token) {
+      router.push('/login');
+    }
+  }, [token, router]);
 
-      }
-      else{
-        router.push("/")
-        return
-      }
-    }, [cookies]);
-
-    return <Component {...props} />;
-  };
+  return token;
 };
 
-export default Auth_Required;
-
+export default useAuthProtection;

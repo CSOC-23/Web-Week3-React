@@ -3,8 +3,13 @@ import AddTask from "../components/AddTask";
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
+import useAuthProtection from "../middlewares/auth_required";
+// import { checkAuthentication } from "../middlewares/auth_required";
 
 export default function Home() {
+
+	useAuthProtection()
+	
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
 
@@ -28,9 +33,10 @@ export default function Home() {
 	
 	}
 
+
 	useEffect(()=>{
 		getTasks()
-	},[tasks])
+	},[])
 
 	return (
 		<div>

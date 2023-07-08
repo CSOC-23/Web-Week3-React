@@ -6,10 +6,9 @@ import axios from "../utils/axios";
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useRouter } from 'next/router';
 
 const bull = (
 	<Box
@@ -26,6 +25,8 @@ export default function TodoListItem({tasks}) {
 	const [id, setId] = useState()
 	const [hide, setHide] = useState(true)
 	const [titleValue, setTitle] = useState("")
+
+	const router = useRouter()
 
 	const options={
 		headers: {
@@ -51,6 +52,7 @@ export default function TodoListItem({tasks}) {
 		 */
 
 		await axios.delete(`todo/${id}/`,options)
+		router.reload()
 	};
 
 	const updateTask = async(id) => {
@@ -62,6 +64,7 @@ export default function TodoListItem({tasks}) {
 
 		axios.put(`todo/${id}/`,{title: titleValue},options).then(()=>{
 			setTitle("")
+			router.reload()
 		}).catch((err)=>console.log(err))
 		
 	};

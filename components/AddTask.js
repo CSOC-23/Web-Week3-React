@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
+import { useRouter } from "next/router";
 
 export default function AddTask() {
 
 	const [task, setTask] = useState("")
 	const { token } = useAuth();
+	const router = useRouter()
 
 	const addTask = async() => {
 		/**
@@ -23,8 +25,7 @@ export default function AddTask() {
 
 		try{
 			await axios.post("todo/create/",{title:task},options)
-			///note that I am adding window.location.reload() instead of adding tasks in the useEffect hook in the index.js file because it is causing re-renders
-			// window.location.reload()
+			router.reload()
 		}
 		catch(err){
 			console.log(err)
