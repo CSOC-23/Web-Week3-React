@@ -1,8 +1,8 @@
 import "../styles/globals.css";
-import { AuthProvider, useAuth } from "../context/auth";
+import { AuthProvider } from "../context/auth";
 import Nav from "../components/Nav";
-import { checkAuthentication } from "../middlewares/auth_required";
-import { useEffect } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
 
 			<Nav />
 			<Component {...pageProps} />
-						
+			<ToastContainer />
 		</AuthProvider>
 	);
 }

@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, createContext } from "react";
 import { useCookies } from "react-cookie";
 import axios from "../utils/axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext({});
 
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
 		setAvatarImage("#")
 		setProfileName("")
 		router.push("/login");
+		toast.success("Logged Out!")
 	};
 
 	const fetchData = ()=>{

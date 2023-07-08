@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/auth";
 import axios from "../utils/axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function RegisterForm() {
 	const { setToken } = useAuth();
@@ -20,11 +21,11 @@ export default function RegisterForm() {
 		try {
 			// Form validation
 			if (!username) {
-			  console.log("Please enter username")
+			  toast.error("Please enter username!")
 			  return
 			}
 			else if(!password){
-				console.log("Please enter password")
+				toast.error("Please enter password!")
 				return
 			}
 	  
@@ -46,10 +47,9 @@ export default function RegisterForm() {
 			//Note that I am not using router.push because it does not cause the page to refresh. I want to fetch data from the backend so, I am using window.location.href for it
 			window.location.href = "/"
 	  
-			console.log("Login successful");
 		  } catch (error) {
 			// Handle login error
-			console.log(`${error}`);
+			toast.error("Password or Username is incorrect!")
 		  }
 		
 	};

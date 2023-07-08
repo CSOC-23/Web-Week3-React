@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import useAuthProtection from "../middlewares/auth_required";
+import { toast } from "react-toastify";
 
 export default function Home() {
 
@@ -32,6 +33,9 @@ export default function Home() {
 	
 	}
 
+	useEffect(()=>{
+		toast.success("Login successful!")
+	},[])
 
 	useEffect(()=>{
 		getTasks()

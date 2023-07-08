@@ -9,6 +9,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
+import { toast } from 'react-toastify';
+
 const bull = (
 	<Box
 	  component="span"
@@ -37,7 +39,13 @@ export default function TodoListItem({tasks}) {
 		 * @todo Complete this function.
 		 * @todo 1. Update the dom accordingly
 		 */
-		setHide(false)
+		if(hide){
+
+			setHide(false)
+		}
+		else{
+			setHide(true)
+		}
 
 	};
 
@@ -48,8 +56,10 @@ export default function TodoListItem({tasks}) {
 		 * @todo 2. Remove the task from the dom.
 		 */
 
-		await axios.delete(`todo/${id}/`,options)
-		
+		const response = await axios.delete(`todo/${id}/`,options)
+		if (response){
+			toast.success("Item Deleted Successfully!")
+		}
 	};
 
 	const updateTask = async(id) => {
@@ -61,13 +71,15 @@ export default function TodoListItem({tasks}) {
 
 		axios.put(`todo/${id}/`,{title: titleValue},options).then(()=>{
 			setTitle("")
-			
+			toast.success("Item updated successfully!")
 		}).catch((err)=>console.log(err))
 		
 	};
 
 	return (
 		<div className='flex flex-col'>
+
+			<div className='space-y-4'>
 				<input
 					id="input-button-1"
 					name="taskEdit"
@@ -88,6 +100,7 @@ export default function TodoListItem({tasks}) {
 					>
 						Done
 					</button>
+				</div>
 				</div>
 
 				<div className='flex task-dabba'>
