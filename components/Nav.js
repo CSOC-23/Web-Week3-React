@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "../context/auth";
 import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
 /**
  *
  * @todo Condtionally render login/register and Profile name in NavBar
@@ -10,15 +11,30 @@ import { useRouter } from 'next/router';
 
 export default function Nav() {
 	const router = useRouter();
+
+	const [direction, setDirection] = useState(true)
+	const [normal, setNormal] = useState(false)
+
 	const { logout, profileName, avatarImage } = useAuth();
 
 	const handleRegisterClick = () => {
+		setDirection(false)
 		router.push('/register');
 	  };
 
 	  const handleLoginClick = () => {
+		setDirection(true)
 		router.push('/login');
 	  };
+
+	  useEffect(()=>{
+		if(router.pathname=="/"){
+			setNormal(true)
+		}
+		else{
+			setNormal(false)
+		}
+	  },[router.pathname])
 
 	return (
 		<nav className="navbar">
@@ -33,12 +49,12 @@ export default function Nav() {
 					</li>
 				</ul>
 				<ul className="flex">
-					<li className="text-my-white mr-2 text-3xl">
-					<button onClick={handleLoginClick}>Login</button>
+					<li className={`text-my-white mr-2 text-3xl focus:outline-none ${normal? "":`${direction? "li-dabba":""}`}`}>
+					<button onClick={handleLoginClick} className="focus:outline-none">Login</button>
 					</li>
 					<div className="w-0.5 bg-my-olive h-auto border rounded-full"></div>
-					<li className="text-[#F6EDD9] text-3xl ml-2">
-					<button onClick={handleRegisterClick}>Register</button>
+					<li className={`text-[#F6EDD9] text-3xl ml-2 focus:outline-none ${normal? "":`${direction? "":"li-dabba"}`}`}>
+					<button onClick={handleRegisterClick} className="focus:outline-none">Register</button>
 					</li>
 				</ul>
 				<div className="inline-block relative w-28">

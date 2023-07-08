@@ -45,3 +45,7 @@
   max-width: 80vw;
   justify-content: center;
 }
+
+.li-dabba button{
+  text-decoration: underline;
+}
