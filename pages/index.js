@@ -3,6 +3,7 @@ import AddTask from "../components/AddTask";
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
+import useAuthProtection from "../middlewares/auth_required";
 
 export default function Home() {
 	const { token } = useAuth();
@@ -14,6 +15,7 @@ export default function Home() {
 		 * @todo Set the tasks state and display them in the using TodoListItem component
 		 * The user token can be accessed from the context using useAuth() from /context/auth.js
 		 */
+
 	}
 
 	return (

@@ -5,6 +5,22 @@ export default function AddTask() {
 		 * @todo 1. Send the request to add the task to the backend server.
 		 * @todo 2. Add the task in the dom.
 		 */
+
+		
+
+
+	const addTask = async() => {
+		
+
+		try{
+			await axios.post("todo/create/",{title:task},options)
+		}
+		
+		catch(err){
+			console.log(err)
+		}
+
+	};
 	};
 
 	return (
