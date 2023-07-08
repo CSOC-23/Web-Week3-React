@@ -19,7 +19,6 @@ export default function RegisterForm() {
 		 * @todo 3. Set the token in the context (See context/auth.js)
 		 */
 		try {
-			// Form validation
 			if (!username) {
 			  toast.error("Please enter username!")
 			  return
@@ -29,26 +28,19 @@ export default function RegisterForm() {
 				return
 			}
 	  
-			// Send login request to the backend
 			const response = await axios.post("auth/login/", {
 			  username: username,
 			  password: password,
 			});
 	  
-			// Extract the token from the response
 			const { token } = response.data;
 	  
-			// Set the token in the context
 			setToken(token)
-
-			// Optionally, you can redirect the user to a specific page after successful login
-			// router.push("/dashboard");
 			
 			//Note that I am not using router.push because it does not cause the page to refresh. I want to fetch data from the backend so, I am using window.location.href for it
 			window.location.href = "/"
 	  
 		  } catch (error) {
-			// Handle login error
 			toast.error("Password or Username is incorrect!")
 		  }
 		

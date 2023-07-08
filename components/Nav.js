@@ -43,7 +43,7 @@ export default function Nav() {
 					<li>
 						<Link href="/" passHref={true}>
 							<a>
-								<h1 className="text-my-white font-bold text-5xl font-custom-2">Todo</h1>
+								<h1 className="text-my-white font-bold text-5xl font-custom-2">ToDo</h1>
 							</a>
 						</Link>
 					</li>
