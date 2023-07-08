@@ -2,13 +2,19 @@
 	"name": "csoc-2021-task3-nextjs",
 	"version": "0.1.0",
 	"private": true,
+	"engines": {
+		"node": "16.x"
+	},
 	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
+		"dev": "next dev -p 3002",
 		"start": "next start",
+		"build": "next build",
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.1",
+		"@emotion/styled": "^11.11.0",
+		"@mui/material": "^5.13.7",
 		"autoprefixer": "^10.2.6",
 		"axios": "^0.21.1",
 		"izitoast": "^1.4.0",
@@ -17,6 +23,7 @@
 		"react": "17.0.2",
 		"react-cookie": "^4.0.3",
 		"react-dom": "17.0.2",
+		"react-toastify": "^9.1.3",
 		"tailwindcss": "^2.2.2"
 	},
 	"devDependencies": {

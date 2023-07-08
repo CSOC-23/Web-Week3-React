@@ -1,11 +1,49 @@
+import { useState } from "react";
+import { useAuth } from "../context/auth";
+import axios from "../utils/axios";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+
 export default function RegisterForm() {
-	const login = () => {
+	const { setToken } = useAuth();
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+	const router = useRouter()
+
+	const login = async() => {
 		/***
 		 * @todo Complete this function.
 		 * @todo 1. Write code for form validation.
 		 * @todo 2. Fetch the auth token from backend and login the user.
 		 * @todo 3. Set the token in the context (See context/auth.js)
 		 */
+		try {
+			if (!username) {
+			  toast.error("Please enter username!")
+			  return
+			}
+			else if(!password){
+				toast.error("Please enter password!")
+				return
+			}
+	  
+			const response = await axios.post("auth/login/", {
+			  username: username,
+			  password: password,
+			});
+	  
+			const { token } = response.data;
+	  
+			setToken(token)
+			
+			//Note that I am not using router.push because it does not cause the page to refresh. I want to fetch data from the backend so, I am using window.location.href for it
+			window.location.href = "/"
+	  
+		  } catch (error) {
+			toast.error("Password or Username is incorrect!")
+		  }
+		
 	};
 
 	return (
@@ -19,6 +57,8 @@ export default function RegisterForm() {
 						name="inputUsername"
 						id="inputUsername"
 						placeholder="Username"
+						value={username}
+						onChange={(e)=>setUsername(e.target.value)}
 					/>
 
 					<input
@@ -27,6 +67,8 @@ export default function RegisterForm() {
 						name="inputPassword"
 						id="inputPassword"
 						placeholder="Password"
+						value={password}
+						onChange={(e)=>setPassword(e.target.value)}
 					/>
 
 					<button

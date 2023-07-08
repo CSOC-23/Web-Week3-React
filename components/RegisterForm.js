@@ -25,7 +25,7 @@ export default function Register() {
 		return true;
 	};
 
-	const register = (e) => {
+	const register = async(e) => {
 		e.preventDefault();
 
 		if (registerFieldsAreValid(firstName, lastName, email, username, password)) {
@@ -40,12 +40,14 @@ export default function Register() {
 
 			axios
 				.post("auth/register/", dataForApiRequest)
-				.then(function ({ data, status }) {
+				.then(function ({ data }) {
 					setToken(data.token);
-					router.push("/");
+					window.location.href = "/"
+					return
 				})
 				.catch(function (err) {
 					console.log("An account using same email or username is already created");
+					return
 				});
 		}
 	};

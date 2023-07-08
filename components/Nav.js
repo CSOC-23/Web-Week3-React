@@ -2,39 +2,66 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useAuth } from "../context/auth";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
 /**
  *
  * @todo Condtionally render login/register and Profile name in NavBar
  */
 
 export default function Nav() {
+	const router = useRouter();
+
+	const [direction, setDirection] = useState(true)
+	const [normal, setNormal] = useState(false)
+
 	const { logout, profileName, avatarImage } = useAuth();
 
+	const handleRegisterClick = () => {
+		setDirection(false)
+		router.push('/register');
+	  };
+
+	  const handleLoginClick = () => {
+		setDirection(true)
+		router.push('/login');
+	  };
+
+	  useEffect(()=>{
+		if(router.pathname=="/"){
+			setNormal(true)
+		}
+		else{
+			setNormal(false)
+		}
+	  },[router.pathname])
+
 	return (
-		<nav className="bg-blue-600">
+		<nav className="navbar">
 			<ul className="flex items-center justify-between p-5">
 				<ul className="flex items-center justify-between space-x-4">
 					<li>
 						<Link href="/" passHref={true}>
 							<a>
-								<h1 className="text-white font-bold text-xl">Todo</h1>
+								<h1 className="text-my-white font-bold text-5xl font-custom-2">ToDo</h1>
 							</a>
 						</Link>
 					</li>
 				</ul>
 				<ul className="flex">
-					<li className="text-white mr-2">
-						<Link href="/login">Login</Link>
+					<li className={`text-my-white mr-2 text-3xl focus:outline-none ${normal? "":`${direction? "li-dabba":""}`}`}>
+					<button onClick={handleLoginClick} className="focus:outline-none">Login</button>
 					</li>
-					<li className="text-white">
-						<Link href="/register">Register</Link>
+					<div className="w-0.5 bg-my-olive h-auto border rounded-full"></div>
+					<li className={`text-[#F6EDD9] text-3xl ml-2 focus:outline-none ${normal? "":`${direction? "":"li-dabba"}`}`}>
+					<button onClick={handleRegisterClick} className="focus:outline-none">Register</button>
 					</li>
 				</ul>
 				<div className="inline-block relative w-28">
 					<div className="group inline-block relative">
-						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
-							<img src={avatarImage} />
-							<span className="mr-1">{profileName}</span>
+						<button className="text-my-white font-semibold py-2 px-4 rounded flex flex-col items-center">
+							<img style={{borderRadius:"50px"}} src={avatarImage} />
+							<span className="text-base font-custom-1">{profileName}</span>
 							<svg
 								className="fill-current h-4 w-4"
 								xmlns="http://www.w3.org/2000/svg"

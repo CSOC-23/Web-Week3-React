@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, createContext } from "react";
 import { useCookies } from "react-cookie";
 import axios from "../utils/axios";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext({});
 
@@ -10,16 +11,20 @@ export const AuthProvider = ({ children }) => {
 	const [profileName, setProfileName] = useState("");
 	const [avatarImage, setAvatarImage] = useState("#");
 	const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
+
 	const token = cookies.token;
 
 	const setToken = (newToken) => setCookies("token", newToken, { path: "/" });
 	const deleteToken = () => removeCookies("token");
 	const logout = () => {
 		deleteToken();
+		setAvatarImage("#")
+		setProfileName("")
 		router.push("/login");
+		toast.success("Logged Out!")
 	};
 
-	useEffect(() => {
+	const fetchData = ()=>{
 		if (token) {
 			axios
 				.get("auth/profile/", {
@@ -36,10 +41,14 @@ export const AuthProvider = ({ children }) => {
 					setProfileName(response.data.name);
 				})
 				.catch((error) => {
-					console.log("Some error occurred");
+					console.log(error);
 				});
 		}
-	}, [setAvatarImage, setProfileName, token]);
+	}
+
+	useEffect(() => {
+		fetchData()
+	}, []);
 
 	return (
 		<AuthContext.Provider
@@ -55,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 			}}>
 			{children}
 		</AuthContext.Provider>
-	);
+	)
 };
 
 export const useAuth = () => useContext(AuthContext);
