@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+background-color: # ;
+}
+
+
 .hideme {
   display: none !important;
 }
+
 
 .todo-edit-task-input,
 .todo-add-task-input {
