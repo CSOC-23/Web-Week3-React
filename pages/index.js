@@ -17,7 +17,6 @@ export default function Home() {
 		 * The user token can be accessed from the context using useAuth() from /context/auth.js
 		 */
 		try {
-			console.log("called")
 			let resp = await axios.get("todo/", {
 				headers: {
 					Authorization: `Token ${token}`,
