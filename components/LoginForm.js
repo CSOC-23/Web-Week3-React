@@ -110,7 +110,7 @@ export default function LoginForm() {
 					<hr className="relative top-3" />
 
 					<div className="flex justify-center relative top-5 text-sm text-gray-500">
-						Don't have an account?<span className="text-blue-600"><Link href="/register"> &nbsp; Register</Link></span>
+						Don&apos;t have an account?<span className="text-blue-600"><Link href="/register"> &nbsp; Register</Link></span>
 					</div>
 				</div>
 			</div>
