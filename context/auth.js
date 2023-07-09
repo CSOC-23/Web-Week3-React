@@ -10,16 +10,23 @@ export const AuthProvider = ({ children }) => {
 	const [profileName, setProfileName] = useState("");
 	const [avatarImage, setAvatarImage] = useState("#");
 	const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
-	const token = cookies.token;
+	const [token, SetToken] = useState(cookies.token);
 
-	const setToken = (newToken) => setCookies("token", newToken, { path: "/" });
-	const deleteToken = () => removeCookies("token");
+	const setToken = (newToken) => {
+		setCookies("token", newToken, { path: "/" });
+		SetToken(newToken);
+	};
+	const deleteToken = () => {
+		removeCookies("token");
+		SetToken(null);
+	};
 	const logout = () => {
 		deleteToken();
 		router.push("/login");
 	};
 
 	useEffect(() => {
+		console.log("Token changed to " + token);
 		if (token) {
 			axios
 				.get("auth/profile/", {
@@ -52,7 +59,8 @@ export const AuthProvider = ({ children }) => {
 				avatarImage,
 				setAvatarImage,
 				logout,
-			}}>
+			}}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

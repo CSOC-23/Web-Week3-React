@@ -3,27 +3,26 @@ import { useState } from "react";
 export default function AddTask({ add, token }) {
 	const addTask = async () => {
 		/**
-		 * @todo Complete this function.
+		 * @done Complete this function.
 		 * @done 1. Send the request to add the task to the backend server.
-		 * @todo 2. Add the task in the dom.
+		 * @done 2. Add the task in the dom.
 		 */
 		try {
-			let id = await fetch(
-				"https://todo-api-s7vj.onrender.com/todo/create/",
+			let id = await axios.post(
+				"todo/create/",
 				{
-					method: "POST",
+					title,
+				},
+				{
 					headers: {
 						Authorization: `Token ${token}`,
 						"Content-Type": "application/json",
 					},
-					body: JSON.stringify({
-						title: title,
-					}),
 				}
-			).then(k=>k.json());
-			console.log(id , " is the id recieved");
-			add({title,id});
+			);//id is not returned by the server
+
 			setTitle("");
+			add();
 		} catch (err) {
 			console.log(err);
 		}
@@ -38,6 +37,7 @@ export default function AddTask({ add, token }) {
 				onChange={(e) => {
 					setTitle(e.target.value);
 				}}
+				value={title}
 			/>
 			<button
 				type="button"
