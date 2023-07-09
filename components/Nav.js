@@ -26,19 +26,25 @@ export default function Nav() {
 				</ul>
 				{!token && (
 					<ul className="flex">
-						<li className="text-white mr-2">
+						<li className="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap m-3 rounded duration-150">
 							<Link href="/login">Login</Link>
 						</li>
-						<li className="text-white">
+						<li className="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap m-3 rounded duration-150">
 							<Link href="/register">Register</Link>
 						</li>
 					</ul>
 				)}
-				<div className="inline-block relative w-28">
+				<div
+					className={
+						"inline-block relative w-28" + (!token ? " hidden" : "")
+					}
+				>
 					<div className="group inline-block relative">
 						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
 							<img src={avatarImage} />
-							<span className="mr-1">{token?profileName:""}</span>
+							<span className="mr-1">
+								{token ? profileName : ""}
+							</span>
 							<svg
 								className="fill-current h-4 w-4"
 								xmlns="http://www.w3.org/2000/svg"

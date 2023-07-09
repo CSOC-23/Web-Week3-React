@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
-export default function RegisterForm() {
+export default function RegisterForm({toast}) {
 	
 	/**
 	 * @done Complete this function.
@@ -17,7 +17,7 @@ export default function RegisterForm() {
 	const login = async (e) => {
 		e.preventDefault();
 		if (username === "" || password === "") {
-			console.log("Please fill all the fields correctly.");
+			toast.error("Please fill all the fields correctly.");
 			return;
 		}
 		const dataForApiRequest = {
@@ -30,12 +30,10 @@ export default function RegisterForm() {
 				"auth/login/",
 				dataForApiRequest
 			);
-			// console.log(data.token);
 			setToken(data.token);
 			router.push("/");
 		} catch (err) {
-			console.log(
-				err,
+			toast.error(
 				"An account using same email or username is already created"
 			);
 			
@@ -69,7 +67,8 @@ export default function RegisterForm() {
 
 					<button
 						type="submit"
-						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1"
+						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1 duration-150"
+						duration-150
 						onClick={login}
 					>
 						Login

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from "../utils/axios";
 import React, { useState } from "react";
-export default function TodoListItem({ task, onRemove, token }) {
+export default function TodoListItem({ task, token,toast }) {
 	const [title, setTitle] = useState(task.title);
 	const [newTitle, setNewTitle] = useState(title);
 	const [deleted, setDeleted] = useState(false);
@@ -31,7 +31,10 @@ export default function TodoListItem({ task, onRemove, token }) {
 			.then(() => {
 				setDeleted(true);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				toast.error("Error in deleting task!");
+				console.error(err);
+			});
 	};
 
 	const updateTask = () => {
@@ -58,7 +61,10 @@ export default function TodoListItem({ task, onRemove, token }) {
 				setTitle(newTitle);
 				setEditing(false);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => {
+				toast.error("Error in updating task!");
+				console.error(err);
+			});
 	};
 	if(deleted)
 	return null;

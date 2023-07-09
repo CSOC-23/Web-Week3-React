@@ -3,7 +3,7 @@ import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
 
-export default function Register() {
+export default function Register({toast}) {
 	const { setToken } = useAuth();
 	const router = useRouter();
 
@@ -15,11 +15,12 @@ export default function Register() {
 
 	const registerFieldsAreValid = (firstName, lastName, email, username, password) => {
 		if (firstName === "" || lastName === "" || email === "" || username === "" || password === "") {
-			console.log("Please fill all the fields correctly.");
+			
+			toast.error("Please fill all the fields correctly!");
 			return false;
 		}
 		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-			console.log("Please enter a valid email address.");
+			toast.error("Please enter a valid email address.");
 			return false;
 		}
 		return true;
@@ -29,7 +30,7 @@ export default function Register() {
 		e.preventDefault();
 
 		if (registerFieldsAreValid(firstName, lastName, email, username, password)) {
-			console.log("Please wait...");
+			toast.info("Please wait...");
 
 			const dataForApiRequest = {
 				name: firstName + " " + lastName,
@@ -41,12 +42,11 @@ export default function Register() {
 			axios
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
-					console.log(data.token)
 					setToken(data.token);
 					router.push("/");
 				})
 				.catch(function (err) {
-					console.log("An account using same email or username is already created");
+					toast.error("An account using same email or username is already created");
 				});
 		}
 	};
@@ -107,8 +107,9 @@ export default function Register() {
 
 					<button
 						type="submit"
-						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1"
-						onClick={register}>
+						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1 duration-150"
+						onClick={register}
+					>
 						Register
 					</button>
 				</div>

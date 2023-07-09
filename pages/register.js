@@ -1,9 +1,9 @@
 import RegisterForm from "../components/RegisterForm";
 
-export default function Register() {
+export default function Register({toast}) {
 	return (
 		<div>
-			<RegisterForm />
+			<RegisterForm toast={toast}/>
 		</div>
 	);
 }

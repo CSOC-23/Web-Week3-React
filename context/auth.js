@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ toast, children }) => {
 	const router = useRouter();
 	const [profileName, setProfileName] = useState("");
 	const [avatarImage, setAvatarImage] = useState("#");
@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
 	};
 	const logout = () => {
 		deleteToken();
+		toast.info("Logged out")
 		router.push("/login");
 	};
 

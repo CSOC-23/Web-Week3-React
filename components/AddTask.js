@@ -24,7 +24,7 @@ export default function AddTask({ add, token }) {
 			setTitle("");
 			add();
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 		}
 	};
 	const [title, setTitle] = useState("");
@@ -41,7 +41,7 @@ export default function AddTask({ add, token }) {
 			/>
 			<button
 				type="button"
-				className="todo-add-task bg-transparent hover:bg-green-500 text-green-700 text-sm hover:text-white px-3 py-2 border border-green-500 hover:border-transparent rounded"
+				className="todo-add-task bg-transparent hover:bg-green-500 text-green-700 text-sm hover:text-white px-3 py-2 border border-green-500 hover:border-transparent rounded duration-150"
 				onClick={addTask}
 			>
 				Add Task

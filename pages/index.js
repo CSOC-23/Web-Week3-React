@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 
-export default function Home() {
+export default function Home({toast}) {
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
 	useEffect(() => {
@@ -27,15 +27,6 @@ export default function Home() {
 			return [];
 		}
 	}
-	function removeHandler(task)
-	{
-		return () => {
-			console.log("removing ",task);
-			setTasks((tasks) => tasks.filter((k) => k != task));
-			console.log(tasks.filter((k) => k != task));
-		};
-	}
-	
 	return (
 		<div>
 			<center>
@@ -44,11 +35,11 @@ export default function Home() {
 					add={getTasks}
 				/>
 				<ul className="flex-col mt-9 max-w-sm mb-3 ">
-					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold  ">
+					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold rounded ">
 						Available Tasks
 					</span>
 					{tasks.map((task, i) => {
-						return <TodoListItem task={task} key={i} onRemove={getTasks} token={token}/>;
+						return <TodoListItem task={task} key={i} onRemove={getTasks} token={token} toast={toast}/>;
 					})}
 				</ul>
 			</center>
