@@ -23,14 +23,18 @@ export default function Nav() {
 					</li>
 				</ul>
 				<ul className="flex">
+				{!token &&(<>
 					<li className="text-white mr-2">
 						<Link href="/login">Login</Link>
 					</li>
 					<li className="text-white">
 						<Link href="/register">Register</Link>
 					</li>
+					</>
+				)}
+					
 				</ul>
-				<div className="inline-block relative w-28">
+				{token &&(<div className="inline-block relative w-28">
 					<div className="group inline-block relative">
 						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
 							<img src={avatarImage} />
@@ -53,7 +57,8 @@ export default function Nav() {
 							</li>
 						</ul>
 					</div>
-				</div>
+				</div>)}
+				
 			</ul>
 		</nav>
 	);
