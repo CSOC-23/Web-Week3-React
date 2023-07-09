@@ -1,11 +1,56 @@
+import React, {useState} from "react";
+import {useAuth}  from "../context/auth";
+import {AuthProvider} from "../context/auth";
+import axios from  "../utils/axios";
+import axiosInstance from "../utils/axios";
+
+
+
+
+
+
+
 export default function RegisterForm() {
+	const {setToken}=useAuth();
 	const login = () => {
 		/***
 		 * @todo Complete this function.
 		 * @todo 1. Write code for form validation.
 		 * @todo 2. Fetch the auth token from backend and login the user.
 		 * @todo 3. Set the token in the context (See context/auth.js)
+		 * 
 		 */
+		
+
+	const username = document.getElementById("inputUsername").value;
+    const password = document.getElementById("inputPassword").value;
+
+    
+    axiosInstance
+      .post("auth/login/", {
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        
+        const token = response.data.token;
+
+        
+        setToken(token);
+
+       
+        document.getElementById("inputUsername").value = "";
+        document.getElementById("inputPassword").value = "";
+
+        
+      })
+      .catch((error) => {
+        
+        console.log("Authentication failed");
+      });
+
+		
+		
 	};
 
 	return (
@@ -14,6 +59,7 @@ export default function RegisterForm() {
 				<div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
 					<h1 className="mb-8 text-3xl text-center">Login</h1>
 					<input
+					onChange={handlechange}
 						type="text"
 						className="block border border-grey-light w-full p-3 rounded mb-4"
 						name="inputUsername"
@@ -22,6 +68,7 @@ export default function RegisterForm() {
 					/>
 
 					<input
+					onChange={phandlechange}
 						type="password"
 						className="block border border-grey-light w-full p-3 rounded mb-4"
 						name="inputPassword"

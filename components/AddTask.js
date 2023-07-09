@@ -1,5 +1,34 @@
+import React, {useState} from "react";
+
+
 export default function AddTask() {
+	const[task,settask]=useState("");
 	const addTask = () => {
+
+		
+		function handlechange(event){
+			newvalue=event.target.value;
+			settask(newvalue);
+
+		}
+		
+    // Make API request to add the task
+    axiosInstance
+      .post("tasks/", { task: task })
+      .then((response) => {
+       
+        const newTask = response.data;
+
+       
+
+        
+        settask("");
+      })
+      .catch((error) => {
+        
+        console.error(error);
+      });
+
 		/**
 		 * @todo Complete this function.
 		 * @todo 1. Send the request to add the task to the backend server.
@@ -10,6 +39,7 @@ export default function AddTask() {
 	return (
 		<div className="flex items-center max-w-sm mt-24">
 			<input
+
 				type="text"
 				className="todo-add-task-input px-4 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm border border-blueGray-300 outline-none focus:outline-none focus:ring w-full"
 				placeholder="Enter Task"
