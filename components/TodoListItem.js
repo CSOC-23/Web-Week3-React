@@ -22,7 +22,6 @@ export default function TodoListItem({ task, onRemove, token }) {
 		 * @done 1. Send the request to delete the task to the backend server.
 		 * @done 2. Remove the task from the dom.
 		 */
-		console.log(task);
 		axios
 			.delete(`todo/${id}/`, {
 				headers: {

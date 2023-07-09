@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
 			<AuthReqd/>
 			<NoAuthReqd/>
 			<Nav />
-			<Component {...pageProps} />
+			<Component {...pageProps}/>
 		</AuthProvider>
 	);
 }

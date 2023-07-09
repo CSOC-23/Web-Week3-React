@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		console.log("Token changed to " + token);
 		if (token) {
 			axios
 				.get("auth/profile/", {
