@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.hideme {
-  display: none !important;
-}
-
 .todo-edit-task-input,
 .todo-add-task-input {
   border-top-right-radius: 0px;
