@@ -43,7 +43,6 @@ export default function RegisterForm() {
 					setToken(data.token);
 					console.log(data.token)
 					router.push("/");
-					router.reload()
 				})
 				.catch(function (err) {
 					console.log("Enter Correct Username and Password");
