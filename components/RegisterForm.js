@@ -3,7 +3,7 @@ import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
 
-export default function Register({toast}) {
+export default function Register({ toast }) {
 	const { setToken } = useAuth();
 	const router = useRouter();
 
@@ -13,10 +13,27 @@ export default function Register({toast}) {
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 
-	const registerFieldsAreValid = (firstName, lastName, email, username, password) => {
-		if (firstName === "" || lastName === "" || email === "" || username === "" || password === "") {
-			
+	const registerFieldsAreValid = (
+		firstName,
+		lastName,
+		email,
+		username,
+		password
+	) => {
+		firstName = firstName.trim();
+		lastName = lastName.trim();
+		username = username.trim();
+		if (
+			firstName.length === 0 ||
+			lastName.length === 0 ||
+			username.length === 0 ||
+			password === ""
+		) {
 			toast.error("Please fill all the fields correctly!");
+			return false;
+		}
+		if (firstName.length + lastName.length + 1 > 150) {
+			toast.error("Full Name is too long!");
 			return false;
 		}
 		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -29,7 +46,15 @@ export default function Register({toast}) {
 	const register = (e) => {
 		e.preventDefault();
 
-		if (registerFieldsAreValid(firstName, lastName, email, username, password)) {
+		if (
+			registerFieldsAreValid(
+				firstName,
+				lastName,
+				email,
+				username,
+				password
+			)
+		) {
 			toast.info("Please wait...");
 
 			const dataForApiRequest = {
@@ -43,16 +68,24 @@ export default function Register({toast}) {
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
 					setToken(data.token);
+					toast.dismiss();
 					router.push("/");
 				})
 				.catch(function (err) {
-					toast.error("An account using same email or username is already created");
+					toast.error(
+						"An account using same email or username is already created"
+					);
 				});
 		}
 	};
 
 	return (
-		<div className="bg-grey-lighter min-h-screen flex flex-col">
+		<div
+			style={{
+				backgroundColor: "#ddd",
+			}}
+			className="bg-grey-lighter min-h-screen flex flex-col"
+		>
 			<div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
 				<div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
 					<h1 className="mb-8 text-3xl text-center">Register</h1>

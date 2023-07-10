@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from "../utils/axios";
 import React, { useState } from "react";
-export default function TodoListItem({ task, token,toast }) {
+export default function TodoListItem({ task, token,toast,onRemove }) {
 	const [title, setTitle] = useState(task.title);
 	const [newTitle, setNewTitle] = useState(title);
 	const [deleted, setDeleted] = useState(false);
@@ -29,7 +29,8 @@ export default function TodoListItem({ task, token,toast }) {
 				},
 			})
 			.then(() => {
-				setDeleted(true);
+				// setDeleted(true);
+				onRemove()
 			})
 			.catch((err) => {
 				toast.error("Error in deleting task!");
@@ -43,7 +44,11 @@ export default function TodoListItem({ task, token,toast }) {
 		 * @done 1. Send the request to update the task to the backend server.
 		 * @done 2. Update the task in the dom.
 		 */
+		if(newTitle==title)
+		{
+			return setEditing(false)
 
+		}
 		axios
 			.patch(
 				`todo/${id}/`,
@@ -70,7 +75,7 @@ export default function TodoListItem({ task, token,toast }) {
 	return null;
 	return (
 		<>
-			<li  className="border flex border-gray-500 rounded px-2 py-2 justify-between items-center mb-2">
+			<li className="border flex border-gray-500 rounded px-2 py-2 justify-between items-center mb-2">
 				<input
 					id="input-button-1"
 					type="text"
@@ -90,14 +95,19 @@ export default function TodoListItem({ task, token,toast }) {
 						Done
 					</button>
 				</div>
-				<div
+				<label
 					id="task-1"
 					className={
 						(editing ? " hideme " : "") + "todo-task  text-gray-600"
 					}
+					style={{
+						width:"70%",
+						wordWrap:"break-word"
+
+					}}
 				>
 					{title}
-				</div>
+				</label>
 				<span id="task-actions-1" className={editing ? "hideme" : ""}>
 					<button
 						style={{ marginRight: "5px" }}

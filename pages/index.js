@@ -27,6 +27,11 @@ export default function Home({toast}) {
 			return [];
 		}
 	}
+	const removeHandler = (task) => {
+		return () => {
+			setTasks((tasks) => tasks.filter((t) => t.id !== task.id));
+		};
+	};
 	return (
 		<div>
 			<center>
@@ -36,10 +41,10 @@ export default function Home({toast}) {
 				/>
 				<ul className="flex-col mt-9 max-w-sm mb-3 ">
 					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold rounded ">
-						Available Tasks
+						Enqueued Tasks: {tasks.length==0?"None":tasks.length}
 					</span>
 					{tasks.map((task, i) => {
-						return <TodoListItem task={task} key={i} onRemove={getTasks} token={token} toast={toast}/>;
+						return <TodoListItem task={task} key={i} onRemove={removeHandler(task)} token={token} toast={toast}/>;
 					})}
 				</ul>
 			</center>
