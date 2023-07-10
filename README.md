@@ -1,5 +1,6 @@
 # ReactJS Todo Application - CSoC Dev Web Task 3
 
+# While registering on the register page , keep the inspect/console panel on to know that you have to try again !
 ## Introduction
 
 In this task you will be working on a todo application made using NextJS a SSR framework for ReactJS. The main motive of this task is to make you familiar with:
