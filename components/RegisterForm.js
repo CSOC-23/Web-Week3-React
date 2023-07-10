@@ -42,7 +42,7 @@ export default function Register() {
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
 					setToken(data.token);
-					router.push("/");
+					router.push("/")
 				})
 				.catch(function (err) {
 					console.log("An account using same email or username is already created");

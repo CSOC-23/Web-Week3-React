@@ -14,7 +14,7 @@ export default function auth_required() {
 
     useEffect(()=>{
         if(token === undefined || token === null){
-            router.push("/login");
+            router.replace('/login')
         }
     },[token])
   

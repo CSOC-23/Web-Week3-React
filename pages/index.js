@@ -1,6 +1,7 @@
 import TodoListItem from "../components/TodoListItem";
 import AddTask from "../components/AddTask";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { API_URL } from '../utils/constants';
@@ -8,11 +9,10 @@ import auth_required from "../middlewares/auth_required";
 
 export default function Home() {
 
-	auth_required();
-
+	const { router } = useRouter()
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
-	
+
 
 	function getTasks() {
 		/***
@@ -20,6 +20,7 @@ export default function Home() {
 		 * @todo Set the tasks state and display them in the using TodoListItem component
 		 * The user token can be accessed from the context using useAuth() from /context/auth.js
 		 */
+
 		axios({
 			headers:{
 				Authorization : 'Token '+token
@@ -33,10 +34,7 @@ export default function Home() {
 		})
 	}
 
-	useEffect(()=>{
-		getTasks()
-		console.log(token)
-	},[tasks])
+	useEffect(()=>{getTasks()},[tasks])
 
 	return (
 		<div>

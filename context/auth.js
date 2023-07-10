@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 	const logout = () => {
 		deleteToken();
 		router.push("/login");
-		router.reload();
+		router.reload()
 	};
 
 	useEffect(() => {

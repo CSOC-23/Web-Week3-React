@@ -40,9 +40,9 @@ export default function RegisterForm() {
 			axios
 				.post("auth/login/", dataForApiRequest)
 				.then(({ data,status})=>{
-					setToken(data.token);
-					console.log(data.token)
-					router.push("/");
+					setToken(data.token)
+					router.push('login',"/")
+					router.reload()
 				})
 				.catch(function (err) {
 					console.log("Enter Correct Username and Password");
