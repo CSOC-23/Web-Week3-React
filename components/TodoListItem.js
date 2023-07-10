@@ -25,7 +25,7 @@ export default function TodoListItem({task, editTask, updateTask, deleteTask, ed
 								<button
 									className="transition-all duration-700 bg-transparent hover:bg-gray-500 text-gray-700 text-sm  hover:text-white py-2 px-3 border border-gray-500 hover:border-transparent rounded todo-update-task"
 									type="button"
-									onClick={() => updateTask(task.id)}>
+									onClick={() => updateTask(task)}>
 									Done
 								</button>
 							</div>

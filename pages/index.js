@@ -64,18 +64,19 @@ export default function Home() {
 			})
 	};
 
-	const updateTask = (id) => {
+	const updateTask = (task) => {
 		/**
 		 * @todo Complete this function.
 		 * @todo 1. Send the request to update the task to the backend server.
 		 * @todo 2. Update the task in the dom.
 		 */
+		if(editingTitle === task.title) return setEditingId("");
 		const dataForApiRequest = {
 			title: editingTitle
 		}
 		setIsLoading(true);
 		//TODO 1: Sending the request to update the task to the backend server.
-		axios.patch(`/todo/${id}/`, dataForApiRequest, {
+		axios.patch(`/todo/${task.id}/`, dataForApiRequest, {
 			headers: {
 				Authorization: "Token " + token
 			}
