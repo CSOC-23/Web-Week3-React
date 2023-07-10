@@ -36,6 +36,8 @@ export const AuthProvider = ({ children }) => {
 	const logout = () => {
 		deleteToken();
 		setVarToken("");
+		setAvatarImage("");
+		setProfileName("");
 		successToast("You have been logged out")
 		router.push("/login");
 	};

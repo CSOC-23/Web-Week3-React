@@ -31,7 +31,7 @@ export default function TodoListItem({task, editTask, updateTask, deleteTask, ed
 							</div>
 						</> :
 						<>
-							<div id={`input-${task.id}`} className="todo-task text-gray-600">
+							<div id={`input-${task.id}`} className="todo-task text-gray-600 overflow-hidden">
 								{task.title}
 							</div>
 							<span id={`task-actions-${task.id}`} className="">

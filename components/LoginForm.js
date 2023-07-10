@@ -8,7 +8,6 @@ export default function LoginForm() {
 	const loginButton = useRef(null);
 	const { setToken , successToast, errorToast, setIsLoading} = useAuth();
 	const router = useRouter();
-	const {} = useAuth();
 
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -57,6 +56,8 @@ export default function LoginForm() {
 				.then(function ({ data }) {
 					//TODO 3: Setting the auth token in the context
 					setToken(data.token);
+					setUsername("");
+					setPassword("");
 					setIsLoading(false);
 					successToast("Logged In Successfully");
 					router.push("/");
