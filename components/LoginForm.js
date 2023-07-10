@@ -16,6 +16,12 @@ export default function RegisterForm({ toast }) {
 	const login = async (e) => {
 		e.preventDefault();
 		let u = username.trim();
+		if (!/^[a-zA-Z0-9@.+\\-_/]{1,150}$/g.test(u)) {
+			toast.error(
+				"Username can only contain alphabets, numbers and @/./+/-/_ characters."
+			);
+			return false;
+		}
 
 		if (u.length === 0 || password === "") {
 			toast.error("Please fill all the fields correctly!");

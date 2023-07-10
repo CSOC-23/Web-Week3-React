@@ -36,6 +36,12 @@ export default function Register({ toast }) {
 			toast.error("Full Name is too long!");
 			return false;
 		}
+		if (!/^[a-zA-Z0-9@.+\\-_/]{1,150}$/g.test(username)) {
+			toast.error(
+				"Username can only contain alphabets, numbers and @/./+/-/_ characters."
+			);
+			return false;
+		}
 		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
 			toast.error("Please enter a valid email address.");
 			return false;
