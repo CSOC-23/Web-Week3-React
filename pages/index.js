@@ -9,10 +9,10 @@ import auth_required from "../middlewares/auth_required";
 
 export default function Home() {
 
-	const { router } = useRouter()
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
 
+	auth_required()
 
 	function getTasks() {
 		/***
