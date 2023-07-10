@@ -1,9 +1,9 @@
 import LoginForm from "../components/LoginForm";
 
-export default function Login() {
+export default function Login({ toast}) {
 	return (
 		<div>
-			<LoginForm />
+			<LoginForm toast={toast}/>
 		</div>
 	);
 }

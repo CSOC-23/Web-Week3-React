@@ -3,7 +3,7 @@ import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
 
-export default function Register() {
+export default function Register({ toast }) {
 	const { setToken } = useAuth();
 	const router = useRouter();
 
@@ -13,13 +13,37 @@ export default function Register() {
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
 
-	const registerFieldsAreValid = (firstName, lastName, email, username, password) => {
-		if (firstName === "" || lastName === "" || email === "" || username === "" || password === "") {
-			console.log("Please fill all the fields correctly.");
+	const registerFieldsAreValid = (
+		firstName,
+		lastName,
+		email,
+		username,
+		password
+	) => {
+		firstName = firstName.trim();
+		lastName = lastName.trim();
+		username = username.trim();
+		if (
+			firstName.length === 0 ||
+			lastName.length === 0 ||
+			username.length === 0 ||
+			password === ""
+		) {
+			toast.error("Please fill all the fields correctly!");
+			return false;
+		}
+		if (firstName.length + lastName.length + 1 > 150) {
+			toast.error("Full Name is too long!");
+			return false;
+		}
+		if (!/^[a-zA-Z0-9@.+\\-_/]{1,150}$/g.test(username)) {
+			toast.error(
+				"Username can only contain alphabets, numbers and @/./+/-/_ characters."
+			);
 			return false;
 		}
 		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-			console.log("Please enter a valid email address.");
+			toast.error("Please enter a valid email address.");
 			return false;
 		}
 		return true;
@@ -28,8 +52,16 @@ export default function Register() {
 	const register = (e) => {
 		e.preventDefault();
 
-		if (registerFieldsAreValid(firstName, lastName, email, username, password)) {
-			console.log("Please wait...");
+		if (
+			registerFieldsAreValid(
+				firstName,
+				lastName,
+				email,
+				username,
+				password
+			)
+		) {
+			toast.info("Please wait...");
 
 			const dataForApiRequest = {
 				name: firstName + " " + lastName,
@@ -42,16 +74,24 @@ export default function Register() {
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
 					setToken(data.token);
+					toast.dismiss();
 					router.push("/");
 				})
 				.catch(function (err) {
-					console.log("An account using same email or username is already created");
+					toast.error(
+						"An account using same email or username is already created"
+					);
 				});
 		}
 	};
 
 	return (
-		<div className="bg-grey-lighter min-h-screen flex flex-col">
+		<div
+			style={{
+				backgroundColor: "#ddd",
+			}}
+			className="bg-grey-lighter min-h-screen flex flex-col"
+		>
 			<div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
 				<div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
 					<h1 className="mb-8 text-3xl text-center">Register</h1>
@@ -106,8 +146,9 @@ export default function Register() {
 
 					<button
 						type="submit"
-						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1"
-						onClick={register}>
+						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1 duration-150"
+						onClick={register}
+					>
 						Register
 					</button>
 				</div>
