@@ -41,7 +41,7 @@ export default function RegisterForm() {
 				.post("auth/login/", dataForApiRequest)
 				.then(({ data,status})=>{
 					setToken(data.token)
-					router.push('login',"/")
+					router.push("/")
 					router.reload()
 				})
 				.catch(function (err) {
