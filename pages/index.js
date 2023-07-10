@@ -3,10 +3,16 @@ import AddTask from "../components/AddTask";
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
+import { API_URL } from '../utils/constants';
+import auth_required from "../middlewares/auth_required";
 
 export default function Home() {
+
+	auth_required();
+
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
+	
 
 	function getTasks() {
 		/***
@@ -14,7 +20,23 @@ export default function Home() {
 		 * @todo Set the tasks state and display them in the using TodoListItem component
 		 * The user token can be accessed from the context using useAuth() from /context/auth.js
 		 */
+		axios({
+			headers:{
+				Authorization : 'Token '+token
+			},
+			url:API_URL + 'todo/',
+			method:'GET'
+		}).then(({data,status})=>{
+			setTasks(data)
+		}).catch((err)=>{
+			console.log("An error occured while fetching your tasks");
+		})
 	}
+
+	useEffect(()=>{
+		getTasks()
+		console.log(token)
+	},[tasks])
 
 	return (
 		<div>
@@ -24,7 +46,9 @@ export default function Home() {
 					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold rounded-full ">
 						Available Tasks
 					</span>
-					<TodoListItem />
+					{tasks.map((e)=>{
+						return <TodoListItem key ={e.id} id={e.id} title={e.title} />
+					})}
 				</ul>
 			</center>
 		</div>

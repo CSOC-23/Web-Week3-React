@@ -2,13 +2,14 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useAuth } from "../context/auth";
+
 /**
  *
  * @todo Condtionally render login/register and Profile name in NavBar
  */
 
 export default function Nav() {
-	const { logout, profileName, avatarImage } = useAuth();
+	const { logout, profileName, avatarImage, token } = useAuth();
 
 	return (
 		<nav className="bg-blue-600">
@@ -32,6 +33,7 @@ export default function Nav() {
 				</ul>
 				<div className="inline-block relative w-28">
 					<div className="group inline-block relative">
+						{token && <>
 						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
 							<img src={avatarImage} />
 							<span className="mr-1">{profileName}</span>
@@ -52,6 +54,7 @@ export default function Nav() {
 								</a>
 							</li>
 						</ul>
+						</>}
 					</div>
 				</div>
 			</ul>
