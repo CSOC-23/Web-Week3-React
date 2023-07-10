@@ -52,9 +52,9 @@ export default function Home() {
 			headers: {
 				Authorization: "Token " + token
 			}
-		}).then(res => {
+		}).then(async res => {
 			//TODO 2: Getting the tasks from backend
-			getTasks();
+			await getTasks();
 			setIsLoading(false);
 			successToast("Task deleted successfully")
 		})
@@ -80,10 +80,10 @@ export default function Home() {
 				Authorization: "Token " + token
 			}
 		})
-			.then(res => {
+			.then(async res => {
 				//TODO 2: Setting the tasks state
+				await getTasks();
 				setEditingId("");
-				getTasks();
 				setIsLoading(false);
 				successToast("Task updated successfully");
 			})
@@ -93,10 +93,10 @@ export default function Home() {
 			})
 	};
 
-	useEffect(() => {
+	useEffect(async () => {
 		if(token) {
 			setIsLoading(true);
-			getTasks();
+			await getTasks();
 			setIsLoading(false);
 		}
 		else {

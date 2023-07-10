@@ -27,9 +27,9 @@ export default function AddTask({getTasks}) {
 		 * @todo 2. Add the task in the dom.
 		 */
 		//TODO 1: Sending the request to add the task to the backend server.
-		if(title.length) {
+		if(title.trim().length) {
 			const dataForApiRequest = {
-				title
+				title: title.trim()
 			}
 			setIsLoading(true);
 			axios
@@ -38,10 +38,10 @@ export default function AddTask({getTasks}) {
 					Authorization: "Token " + token
 				}
 			})
-			.then(data => {
+			.then(async data => {
 				setTitle("")
 				//TODO 2: Getting the tasks and setting in the tasks array
-				getTasks();
+				await getTasks();
 				setIsLoading(false);
 				successToast("Task added successfully")
 			})
@@ -49,6 +49,9 @@ export default function AddTask({getTasks}) {
 				setIsLoading(false);
 				errorToast(err.message);
 			});
+		}
+		else {
+			errorToast("Task can't be empty");
 		}
 	};
 
