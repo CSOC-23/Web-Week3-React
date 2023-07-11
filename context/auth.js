@@ -10,52 +10,34 @@ export const AuthProvider = ({ children }) => {
 	const [profileName, setProfileName] = useState("");
 	const [avatarImage, setAvatarImage] = useState("#");
 	const [cookies, setCookies, removeCookies] = useCookies(["auth"]);
-	const token = cookies.token;
+	const [token, SetToken] = useState(cookies.token);
 
-	const setToken = (newToken) => setCookies("token", newToken, { path: "/" });
-	const deleteToken = () => removeCookies("token");
-	const logout = () => {
-		deleteToken();
-		router.push("/login");
-	};
+	const setToken = (newToken) => {setCookies("token", newToken, { path: "/" }); SetToken(newToken);};
+	const deleteToken = () => {removeCookies("token"); SetToken(null);};
+	const logout = () => {deleteToken(); router.push("/login");};
 
 	useEffect(() => {
+		console.log("changed token " + token);
 		if (token) {
 			axios
 				.get("auth/profile/", {
-					headers: {
-						Authorization: "Token " + token,
+					headers: {Authorization: "Token " + token,
 					},
 				})
-				.then((response) => {
-					setAvatarImage(
-						"https://ui-avatars.com/api/?name=" +
-							response.data.name +
-							"&background=fff&size=33&color=007bff"
-					);
+				.then((response) => {setAvatarImage("https://ui-avatars.com/api/?name=" + response.data.name + "&background=fff&size=33&color=007bff");
 					setProfileName(response.data.name);
 				})
 				.catch((error) => {
-					console.log("Some error occurred");
+					console.log("error occurred");
 				});
 		}
 	}, [setAvatarImage, setProfileName, token]);
 
 	return (
 		<AuthContext.Provider
-			value={{
-				token,
-				setToken,
-				deleteToken,
-				profileName,
-				setProfileName,
-				avatarImage,
-				setAvatarImage,
-				logout,
-			}}>
+			value={{token,setToken,deleteToken,profileName,setProfileName,avatarImage,setAvatarImage,logout,}}>
 			{children}
 		</AuthContext.Provider>
 	);
 };
-
 export const useAuth = () => useContext(AuthContext);
