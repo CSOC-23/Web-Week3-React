@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
+import Link from "next/link";
+
 
 export default function Register() {
 	const { setToken } = useAuth();
@@ -42,7 +44,9 @@ export default function Register() {
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
 					setToken(data.token);
-					router.push("/");
+					router.push("/").then(() => {
+						window.location.reload();
+					});
 				})
 				.catch(function (err) {
 					console.log("An account using same email or username is already created");
@@ -51,7 +55,7 @@ export default function Register() {
 	};
 
 	return (
-		<div className="bg-grey-lighter min-h-screen flex flex-col">
+		<div className="bg-grey-lighter min-h-screen flex flex-col px-5">
 			<div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
 				<div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
 					<h1 className="mb-8 text-3xl text-center">Register</h1>
@@ -110,6 +114,9 @@ export default function Register() {
 						onClick={register}>
 						Register
 					</button>
+					<div className="mt-3 text-center text-sm">
+						Already registered, <Link href="/login"><span className="text-lg font-semibold underline text-blue-500">Login</span></Link> here
+					</div>
 				</div>
 			</div>
 		</div>
