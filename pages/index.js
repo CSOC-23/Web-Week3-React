@@ -8,13 +8,30 @@ export default function Home() {
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
 
-	function getTasks() {
-		/***
-		 * @todo Fetch the tasks created by the user.
-		 * @todo Set the tasks state and display them in the using TodoListItem component
-		 * The user token can be accessed from the context using useAuth() from /context/auth.js
-		 */
+	useEffect(() => {
+		getTasks();
+	}, []);
+
+	async function getTasks (){
+     try{
+		const response=await fetch('/api/tasks', {
+			headers: {
+				Authorization:'Token ' + token,
+			},
+		});
+
+		if(response.ok){
+			const data=await response.json();
+			setTasks(data);
+		}else{
+			console.error("Error fetching tasks:", response.status);
+		}
+	 }catch (error) {
+		console.error("there is some error fetching the task", error);
 	}
+
+	
+}
 
 	return (
 		<div>
@@ -24,9 +41,12 @@ export default function Home() {
 					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold rounded-full ">
 						Available Tasks
 					</span>
-					<TodoListItem />
+					{tasks.map((task) => (
+					<TodoListItem key={task.id} task={task}/>
+					))}
 				</ul>
 			</center>
 		</div>
 	);
+	
 }
