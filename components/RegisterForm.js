@@ -15,7 +15,7 @@ export default function Register() {
 
 	const registerFieldsAreValid = (firstName, lastName, email, username, password) => {
 		if (firstName === "" || lastName === "" || email === "" || username === "" || password === "") {
-			console.log("Please fill all the fields correctly.");
+			console.log("fill all the fields correctly.");
 			return false;
 		}
 		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -41,11 +41,12 @@ export default function Register() {
 			axios
 				.post("auth/register/", dataForApiRequest)
 				.then(function ({ data, status }) {
+					console.log(data.token)
 					setToken(data.token);
 					router.push("/");
 				})
 				.catch(function (err) {
-					console.log("An account using same email or username is already created");
+					console.log("An account with same username/email is already created");
 				});
 		}
 	};
@@ -106,7 +107,7 @@ export default function Register() {
 
 					<button
 						type="submit"
-						className="w-full text-center py-3 rounded bg-transparent text-green-500 hover:text-white hover:bg-green-500 border border-green-500 hover:border-transparent focus:outline-none my-1"
+						className="w-full text-center py-3 rounded bg-transparent text-yellow-500 hover:text-white hover:bg-yellow-500 border border-yellow-500 hover:border-transparent focus:outline-none my-1"
 						onClick={register}>
 						Register
 					</button>
@@ -115,3 +116,6 @@ export default function Register() {
 		</div>
 	);
 }
+
+
+
