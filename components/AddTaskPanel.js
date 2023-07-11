@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import Image from 'next/image';
 import { update } from "tar";
 import {v4 as uuidv4} from "uuid";
 
@@ -42,7 +43,7 @@ const AddTaskPanel = ({ input, setInput, todos, setTodos, editTodo, setEditTodo 
     <div className="mt-15">
       <h2 className="flex" style={{ color: "#002765" }}>
         To-Do List{" "}
-        <img
+        <Image
           src="https://www.iconpacks.net/icons/1/free-notebook-icon-1121-thumb.png"
           alt=""
           style={{ height: "5vh" }}
