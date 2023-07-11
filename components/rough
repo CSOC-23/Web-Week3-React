@@ -1,0 +1,23 @@
+<div className="">
+          <input
+            type="text"
+            value={input}
+            required
+            onChange={onInputChange}
+            className="form-control me-5"
+            id="inputPassword2"
+            placeholder="Enter Your Task"
+          />
+          </div>
+          <div className="">
+          <button
+            type="submit"
+            className="btn btn-outline-success mb-3 me-0 fixed-right float-right"
+          >
+            Add Task
+          </button>
+          </div>
+      </form>
+
+      <span className="badge text-bg-primary mb-4 ms-3">Current Tasks</span>
+    </div>

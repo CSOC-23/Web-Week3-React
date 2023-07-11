@@ -1,8 +1,12 @@
+
+
 import TodoListItem from "../components/TodoListItem";
 import AddTask from "../components/AddTask";
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
+import 'bootstrap/dist/css/bootstrap.css';
+// import "bootstrap/dist/js/bootstrap";
 
 export default function Home() {
 	const { token } = useAuth();
