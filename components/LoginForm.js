@@ -1,11 +1,37 @@
+import { useState } from "react";
+import { useAuth } from "../context/auth";
+import axios from "../utils/axios";
+
+
 export default function RegisterForm() {
-	const login = () => {
-		/***
-		 * @todo Complete this function.
-		 * @todo 1. Write code for form validation.
-		 * @todo 2. Fetch the auth token from backend and login the user.
-		 * @todo 3. Set the token in the context (See context/auth.js)
-		 */
+
+	const { setToken } = useAuth();
+	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
+	const [error, setError] = useState("");
+
+
+	const login=async()=>{
+		if(!username || !password){
+			setError("please enter username and password");
+			return;
+		}
+
+        try{
+			const response = await axios.post("/login", 
+			{ username,
+			  password,
+			});
+
+		const {token} = response.data;
+			setToken(token);
+			setUsername("");
+			setPassword("");
+			setError("");
+		}
+		catch(error){
+			setError('error in username or password');
+		}
 	};
 
 	return (
@@ -19,6 +45,8 @@ export default function RegisterForm() {
 						name="inputUsername"
 						id="inputUsername"
 						placeholder="Username"
+						value={username}
+						onChange={(e)=>setUsername(e.target.value)}
 					/>
 
 					<input
@@ -27,6 +55,8 @@ export default function RegisterForm() {
 						name="inputPassword"
 						id="inputPassword"
 						placeholder="Password"
+						value={password}
+						onChange={(e)=>setPassword(e.target.value)}
 					/>
 
 					<button

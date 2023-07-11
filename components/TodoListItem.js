@@ -1,27 +1,67 @@
 /* eslint-disable @next/next/no-img-element */
+import React from 'react'
 
 export default function TodoListItem() {
 	const editTask = (id) => {
-		/**
-		 * @todo Complete this function.
-		 * @todo 1. Update the dom accordingly
-		 */
+	const input = document.getElementById('input-{id}');
+    const doneButton = document.getElementById('done-{id}');
+    const task = document.getElementById('task-{id}');
+    const taskActions = document.getElementById('task-actions-{id}');
+
+	input.classList.remove('hideme');
+    task.classList.add('hideme');
+
+    doneButton.classList.remove('hideme');
+    taskActions.classList.add('hideme');
 	};
 
 	const deleteTask = (id) => {
-		/**
-		 * @todo Complete this function.
-		 * @todo 1. Send the request to delete the task to the backend server.
-		 * @todo 2. Remove the task from the dom.
-		 */
+		fetch('/api/tasks/${id}', {
+			method: 'DELETE',
+		  })
+
+		  .then((response)=>{
+			if(response.ok){
+				const taskElement = document.getElementById('task-${id}');
+          if (taskElement) {
+            taskElement.remove();
+          }
+        } 
+		else {
+			console.log('Failed to delete task');
+		  }
+		})
+		.catch((error)=>{
+			console.log('An error occurred:', error);
+		  });
 	};
 
 	const updateTask = (id) => {
-		/**
-		 * @todo Complete this function.
-		 * @todo 1. Send the request to update the task to the backend server.
-		 * @todo 2. Update the task in the dom.
-		 */
+		const inputElement = document.getElementById('input-button-${id}');
+        const doneButtonElement = document.getElementById('done-button-${id}');
+        const taskElement = document.getElementById('task-${id}');
+
+	    const updatedTaskText = inputElement.value;
+		fetch('/api/tasks/${id}', {
+			method: 'PUT',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ text: updatedTaskText }),
+		  })
+		  .then((response) => {
+			if (response.ok) {
+		    taskElement.textContent = updatedTaskText;
+			inputElement.classList.add('hideme');
+			doneButtonElement.classList.add('hideme');
+		  } 
+		  else{
+			console.log('Error in Updating task');
+		  }
+		})
+		.catch((error)=>{
+			console.log('Error', error);
+		});
 	};
 
 	return (
