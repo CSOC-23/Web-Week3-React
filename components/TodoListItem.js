@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React, { useState } from "react"; 
+import Image from 'next/image';
 import { event } from "jquery";
 
 const TodoListItem = ({ todos, setTodos, setEditTodo }) => {
@@ -45,7 +46,7 @@ const TodoListItem = ({ todos, setTodos, setEditTodo }) => {
 						type="button"
 						onClick={() => editTask(todo)}
 						className="bg-transparent hover:bg-yellow-500 hover:text-white border border-yellow-500 hover:border-transparent rounded px-2 py-2">
-						<img
+						<Image
 							src="https://res.cloudinary.com/nishantwrp/image/upload/v1587486663/CSOC/edit.png"
 							width="18px"
 							height="20px"
@@ -56,7 +57,7 @@ const TodoListItem = ({ todos, setTodos, setEditTodo }) => {
 						type="button"
 						className="bg-transparent hover:bg-red-500 hover:text-white border border-red-500 hover:border-transparent rounded px-2 py-2"
 						onClick={() => deleteTask(todo)}>
-						<img
+						<Image
 							src="https://res.cloudinary.com/nishantwrp/image/upload/v1587486661/CSOC/delete.svg"
 							width="18px"
 							height="22px"
