@@ -6,7 +6,46 @@ export default function RegisterForm() {
 		 * @todo 2. Fetch the auth token from backend and login the user.
 		 * @todo 3. Set the token in the context (See context/auth.js)
 		 */
+
+		const login = () => {
+			const inputUsername = document.getElementById('inputUsername');
+			const inputPassword = document.getElementById('inputPassword');
+	
+			// Step 1: Form validation
+			if (inputUsername.value.trim() === '') {
+				alert('Please enter your username.');
+				return;
+			}
+	
+			if (inputPassword.value.trim() === '') {
+				alert('Please enter your password.');
+				return;
+			}
+	
+			// Step 2: Fetch the auth token from the backend and login the user
+			fetch('/api/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					username: inputUsername.value,
+					password: inputPassword.value,
+				}),
+			})
+			.then(response => response.json())
+			.then(data => {
+				// Step 3: Set the token in the context (assuming you have an AuthContext)
+				AuthContext.setToken(data.token);
+
+				// Optional: Perform additional actions after successful login
+				// For example, navigate to a different page or update the UI
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
 	};
+}
 
 	return (
 		<div className="bg-grey-lighter min-h-screen flex flex-col">

@@ -6,6 +6,16 @@ export default function TodoListItem() {
 		 * @todo Complete this function.
 		 * @todo 1. Update the dom accordingly
 		 */
+		const editInput = document.getElementById(`input-button-${id}`);
+		const doneButton = document.getElementById(`done-button-${id}`);
+		const taskText = document.getElementById(`task-${id}`);
+		const taskActions = document.getElementById(`task-actions-${id}`);
+
+		// Step 1: Update the DOM accordingly
+		editInput.classList.remove('hideme');
+		doneButton.classList.remove('hideme');
+		taskText.classList.add('hideme');
+		taskActions.classList.add('hideme');
 	};
 
 	const deleteTask = (id) => {
@@ -14,6 +24,19 @@ export default function TodoListItem() {
 		 * @todo 1. Send the request to delete the task to the backend server.
 		 * @todo 2. Remove the task from the dom.
 		 */
+		// Step 1: Send the request to delete the task to the backend server
+		fetch(`/api/tasks/${id}`, {
+			method: 'DELETE',
+		})
+			.then(response => response.json())
+			.then(data => {
+				// Step 2: Remove the task from the DOM
+				const taskElement = document.getElementById(`task-${id}`);
+				taskElement.remove();
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
 	};
 
 	const updateTask = (id) => {
@@ -22,6 +45,33 @@ export default function TodoListItem() {
 		 * @todo 1. Send the request to update the task to the backend server.
 		 * @todo 2. Update the task in the dom.
 		 */
+		const editInput = document.getElementById(`input-button-${id}`);
+		const doneButton = document.getElementById(`done-button-${id}`);
+		const taskText = document.getElementById(`task-${id}`);
+		const taskActions = document.getElementById(`task-actions-${id}`);
+
+		// Step 1: Send the request to update the task to the backend server
+		fetch(`/api/tasks/${id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ task: editInput.value }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				// Step 2: Update the task in the DOM
+				taskText.textContent = data.task;
+
+				// Step 3: Update the DOM accordingly
+				editInput.classList.add('hideme');
+				doneButton.classList.add('hideme');
+				taskText.classList.remove('hideme');
+				taskActions.classList.remove('hideme');
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
 	};
 
 	return (

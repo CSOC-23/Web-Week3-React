@@ -8,7 +8,7 @@ import { useAuth } from "../context/auth";
  */
 
 export default function Nav() {
-	const { logout, profileName, avatarImage } = useAuth();
+	const { isAuthenticated,logout, profileName, avatarImage } = useAuth();
 
 	return (
 		<nav className="bg-blue-600">
@@ -23,13 +23,25 @@ export default function Nav() {
 					</li>
 				</ul>
 				<ul className="flex">
+				{isAuthenticated }? (
+						
+							<li className="text-white mr-2">{profileName}</li>
+							<li className="text-white">
+								<a href="#" onClick={logout}>
+									Logout
+								</a>
+							</li>) : 
+							(
+						
 					<li className="text-white mr-2">
 						<Link href="/login">Login</Link>
 					</li>
 					<li className="text-white">
 						<Link href="/register">Register</Link>
-					</li>
+					</li>)
 				</ul>
+				{isAuthenticated && (
+
 				<div className="inline-block relative w-28">
 					<div className="group inline-block relative">
 						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
@@ -53,7 +65,7 @@ export default function Nav() {
 							</li>
 						</ul>
 					</div>
-				</div>
+				</div>)}
 			</ul>
 		</nav>
 	);
