@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { useAuth } from "../context/auth";
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
