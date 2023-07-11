@@ -1,7 +1,13 @@
+'use client'
+
 import { useState } from "react";
 import {useRouter} from "next/router";
 import { useAuth } from "../context/auth";
-import axios from "../utils/axios";
+import axios from "../utils/axios"; 
+import { toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export default function RegisterForm() {
@@ -43,10 +49,10 @@ export default function RegisterForm() {
 				.then(({ data,status})=>{
 					setToken(data.token)
 					router.push("/")
-					router.reload()
+					router.reload();
 				})
 				.catch(function (err) {
-					console.log("Enter Correct Username and Password");
+					toast.error("Enter Correct Username and Password");
 				});
 		}
 
