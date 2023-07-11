@@ -5,6 +5,29 @@ export default function AddTask() {
 		 * @todo 1. Send the request to add the task to the backend server.
 		 * @todo 2. Add the task in the dom.
 		 */
+
+		const inputField = document.querySelector('.todo-add-task-input');
+		const task = inputField.value;
+
+		// Step 1: Send the request to add the task to the backend server
+		// Example implementation using fetch API
+		fetch('/api/tasks', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ task }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				// Step 2: Add the task in the DOM
+				const taskElement = document.createElement('div');
+				taskElement.textContent = data.task;
+				document.body.appendChild(taskElement);
+			})
+			.catch(error => {
+				console.error('Error:', error);
+			});
 	};
 
 	return (
