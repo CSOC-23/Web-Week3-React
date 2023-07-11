@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import { useAuth } from "../context/auth";
 import axios from "../utils/axios";
 
+
 export default function RegisterForm() {
 
 	const { setToken } = useAuth();

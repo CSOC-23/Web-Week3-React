@@ -5,14 +5,12 @@ import { useRouter } from "next/router";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { API_URL } from '../utils/constants';
-import auth_required from "../middlewares/auth_required";
 
 export default function Home() {
 
 	const { token } = useAuth();
 	const [tasks, setTasks] = useState([]);
-
-	auth_required()
+	const router = useRouter()
 
 	function getTasks() {
 		/***
@@ -34,7 +32,9 @@ export default function Home() {
 		})
 	}
 
-	useEffect(()=>{getTasks()},[tasks])
+	useEffect(()=>{
+		getTasks()
+	},[tasks])
 
 	return (
 		<div>

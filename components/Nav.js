@@ -2,6 +2,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { useAuth } from "../context/auth";
+import auth_required from "../middlewares/auth_required";
+import no_auth_required from "../middlewares/no_auth_required";
 
 /**
  *
@@ -10,6 +12,9 @@ import { useAuth } from "../context/auth";
 
 export default function Nav() {
 	const { logout, profileName, avatarImage, token } = useAuth();
+
+	auth_required();
+	no_auth_required();
 
 	return (
 		<nav className="bg-blue-600">
@@ -23,6 +28,7 @@ export default function Nav() {
 						</Link>
 					</li>
 				</ul>
+				{!token?
 				<ul className="flex">
 					<li className="text-white mr-2">
 						<Link href="/login">Login</Link>
@@ -31,32 +37,34 @@ export default function Nav() {
 						<Link href="/register">Register</Link>
 					</li>
 				</ul>
+				:
 				<div className="inline-block relative w-28">
-					<div className="group inline-block relative">
-						{token && <>
-						<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
-							<img src={avatarImage} />
-							<span className="mr-1">{profileName}</span>
-							<svg
-								className="fill-current h-4 w-4"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 20 20">
-								<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-							</svg>
-						</button>
-						<ul className="absolute hidden text-gray-700 pt-1 group-hover:block">
-							<li className="">
-								<a
-									className="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
-									href="#"
-									onClick={()=>logout()}>
-									Logout
-								</a>
-							</li>
-						</ul>
-						</>}
-					</div>
+				<div className="group inline-block relative">
+					{token && <>
+					<button className="bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center">
+						<img src={avatarImage} />
+						<span className="mr-1">{profileName}</span>
+						<svg
+							className="fill-current h-4 w-4"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20">
+							<path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+						</svg>
+					</button>
+					<ul className="absolute hidden text-gray-700 pt-1 group-hover:block">
+						<li className="">
+							<a
+								className="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap"
+								href="#"
+								onClick={()=>logout()}>
+								Logout
+							</a>
+						</li>
+					</ul>
+					</>}
 				</div>
+			</div>
+				}
 			</ul>
 		</nav>
 	);

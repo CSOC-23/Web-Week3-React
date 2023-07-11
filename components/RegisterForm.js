@@ -43,6 +43,7 @@ export default function Register() {
 				.then(function ({ data, status }) {
 					setToken(data.token);
 					router.push("/")
+					router.reload()
 				})
 				.catch(function (err) {
 					console.log("An account using same email or username is already created");
