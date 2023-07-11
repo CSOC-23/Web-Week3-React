@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from "../utils/axios";
 import React, { useState } from "react";
 export default function TodoListItem({ task, onRemove, token }) {
