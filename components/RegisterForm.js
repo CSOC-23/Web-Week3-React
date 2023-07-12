@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "../utils/axios";
 import { useAuth } from "../context/auth";
 import { useRouter } from "next/router";
+import { toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
 
 export default function Register() {
 	const { setToken } = useAuth();
@@ -15,11 +18,11 @@ export default function Register() {
 
 	const registerFieldsAreValid = (firstName, lastName, email, username, password) => {
 		if (firstName === "" || lastName === "" || email === "" || username === "" || password === "") {
-			console.log("Please fill all the fields correctly.");
+			toast.error("Please fill all the fields correctly.");
 			return false;
 		}
 		if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-			console.log("Please enter a valid email address.");
+			toast.error("Please enter a valid email address.");
 			return false;
 		}
 		return true;
@@ -40,12 +43,13 @@ export default function Register() {
 
 			axios
 				.post("auth/register/", dataForApiRequest)
-				.then(function ({ data, status }) {
+				.then(function ({ data, status }){
 					setToken(data.token);
-					router.push("/");
+					router.push("/")
+					router.reload()
 				})
 				.catch(function (err) {
-					console.log("An account using same email or username is already created");
+					toast.error("Username and Password already exists!")
 				});
 		}
 	};

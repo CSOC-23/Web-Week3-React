@@ -1,11 +1,59 @@
+import { useState } from "react";
+import {useRouter} from "next/router";
+import { useAuth } from "../context/auth";
+import axios from "../utils/axios"; 
+import { toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
+
+
+
 export default function RegisterForm() {
-	const login = () => {
+
+	const { setToken } = useAuth();
+	const router = useRouter();
+
+	const [username , setusername]=useState("");
+	const [password , setpassword]=useState("");
+
+	const inputFieldsAreValid = (username, password) => {
+		if (username === "" || password === "") {
+			console.log("Please fill all the fields correctly.");
+			return false;
+		}
+		
+		return true;
+	};
+
+	const login = (e) => {
 		/***
 		 * @todo Complete this function.
 		 * @todo 1. Write code for form validation.
 		 * @todo 2. Fetch the auth token from backend and login the user.
 		 * @todo 3. Set the token in the context (See context/auth.js)
 		 */
+		e.preventDefault();
+
+		if (inputFieldsAreValid(username, password)) {
+			console.log("Please wait...");
+
+			const dataForApiRequest = {
+				username: username,
+				password: password,
+			};
+
+			axios
+				.post("auth/login/", dataForApiRequest)
+				.then(({ data,status})=>{
+					setToken(data.token)
+					router.push("/")
+					router.reload();
+				})
+				.catch(function (err) {
+					toast.error("Enter Correct Username and Password");
+				});
+		}
+
 	};
 
 	return (
@@ -19,6 +67,8 @@ export default function RegisterForm() {
 						name="inputUsername"
 						id="inputUsername"
 						placeholder="Username"
+						value={username}
+						onChange={(e)=>{setusername(e.target.value)}}
 					/>
 
 					<input
@@ -27,6 +77,8 @@ export default function RegisterForm() {
 						name="inputPassword"
 						id="inputPassword"
 						placeholder="Password"
+						value={password}
+						onChange={(e)=>{setpassword(e.target.value)}}
 					/>
 
 					<button
