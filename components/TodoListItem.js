@@ -98,11 +98,11 @@ export default function TodoListItem(props) {
 					</button>
 					<button
 						type="button"
-						className={`${edit?"bg-transparent hover:bg-red-500 hover:text-white border border-red-500 hover:border-transparent rounded px-2 py-2":'hideme'}`}
+						className={`${edit?"bg-transparent hover:bg-red-500  hover:text-white border border-red-500 hover:border-transparent rounded mx-2 px-2 py-2":'hideme'}`}
 						onClick={()=>deleteTask(props.id)}>
 						<img
 							src="https://res.cloudinary.com/nishantwrp/image/upload/v1587486661/CSOC/delete.svg"
-							width="18px"
+							width="30px"
 							height="22px"
 							alt="Delete"
 						/>

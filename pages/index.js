@@ -37,12 +37,12 @@ export default function Home() {
 	},[tasks])
 
 	return (
-		<div>
+		<div className="bg-gradient-to-r from-cyan-500 to-blue-500">
 			<center>
 				<AddTask />
 				<ul className="flex-col mt-9 max-w-sm mb-3 ">
 					<span className="inline-block bg-blue-600 py-1 mb-2 px-9 text-sm text-white font-bold rounded-full ">
-						Available Tasks
+						Available Tasks ({tasks.length})
 					</span>
 					{tasks.map((e)=>{
 						return <TodoListItem key ={e.id} id={e.id} title={e.title} />
